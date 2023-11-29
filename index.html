@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="icon" href="./images/sun.png" type="image/x-icon">
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    <title>Sunrise Sunset - Dashboard</title>
+</head>
+
+<body>
+    <header>
+        <div style="display: flex;">
+            <img src="./images/sun.png" alt="sun" id="website-icon">
+            <div id="wesite-name">Sunrisesunset. <span id="api-text">Api</span></div>
+        </div>
+    </header>
+    <div id="error-message-container">
+        <div id="error-message">
+            <div id="message"></div>
+            <div id="close-btn" onclick="closeErrorMessage()">x</div>
+        </div>
+    </div>
+
+    <div style="display: flex;" id="location-search-container">
+        <div id="location"></div>
+        <div id="search-container">
+            <div id="search-bar">
+                <input type="text" placeholder="Search" id="search-input">
+                <div id="search-button" onclick="getParams(document.getElementById('search-input').value, true)">Search
+                </div>
+            </div>
+            <div style="display: flex;">
+                <div id="my-location-button" onclick="getCurrentLocationAndGeocode()">My Location</div>
+                <div id="dropdown">
+                    <div class="select-box" id="dropdown-selected">Select location</div>
+                    <div id="options-container">
+                        <div class="option" onclick="dropdownClicked(0)">Select Location</div>
+                        <div class="option" onclick="dropdownClicked(1)">Lahore</div>
+                        <div class="option" onclick="dropdownClicked(2)">Karachi</div>
+                        <div class="option" onclick="dropdownClicked(3)">Islamabad</div>
+                        <div class="option" onclick="dropdownClicked(4)">Kala Shah Kaku</div>
+                        <div class="option" onclick="dropdownClicked(5)">Faisalabad</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="cards-container">
+        <div id="today-card" class="card">
+            <div style="display: flex;"><img src="./images/sun.png" alt="sun" id="website-icon">
+                <h2 class="day-text">Today</h2>
+            </div>
+            <div style="display: flex;">
+                <div style="display: flex;">
+                    <img src="./images/sunrise.png" alt="sun" class="property-icon">
+                    <div class="property">
+                        <div class="key">Sunrise</div>
+                        <div class="value" id="td-rise"></div>
+                    </div>
+                </div>
+
+                <div style="display: flex;">
+                    <img src="./images/sunset.png" alt="sun" class="property-icon">
+                    <div class="property">
+                        <div class="key">Sunset</div>
+                        <div class="value" id="td-set"></div>
+                    </div>
+                </div>
+            </div>
+
+            <div style="display: flex;">
+                <div style="display: flex;">
+                    <img src="./images/dawn.png" alt="sun" class="property-icon"">
+                    <div class=" property">
+                    <div class="key">Dawn</div>
+                    <div class="value" id="td-dawn"></div>
+                </div>
+            </div>
+
+            <div style="display: flex;">
+                <img src="./images/dusk.png" alt="sun" class="property-icon"">
+                    <div class=" property">
+                <div class="key">Dusk</div>
+                <div class="value" id="td-dusk"></div>
+            </div>
+        </div>
+    </div>
+
+    <div style="display: flex;">
+        <img src="./images/day-len.png" alt="sun" class="property-icon">
+        <div class="property">
+            <div class="key">Day Length</div>
+            <div class="value" id="td-dl"></div>
+        </div>
+    </div>
+
+    <div style="display: flex;">
+        <img src="./images/noon.png" alt="sun" class="property-icon">
+        <div class="property">
+            <div class="key">Solar Noon</div>
+            <div class="value" id="td-sn"></div>
+        </div>
+    </div>
+
+    <div style="display: flex;">
+        <img src="./images/time-zone.png" alt="sun" class="property-icon">
+        <div class="property">
+            <div class="key">Time Zone</div>
+            <div class="value" id="td-tz"></div>
+        </div>
+    </div>
+    </div>
+
+    <div id="tomorrow-card" class="card">
+        <div style="display: flex;"><img src="./images/sun.png" alt="sun" id="website-icon">
+            <h2 class="day-text">Tomorrow</h2>
+        </div>
+        <div style="display: flex;">
+            <div style="display: flex;">
+                <img src="./images/sunrise.png" alt="sun" class="property-icon">
+                <div class="property">
+                    <div class="key">Sunrise</div>
+                    <div class="value" id="tm-rise"></div>
+                </div>
+            </div>
+
+            <div style="display: flex;">
+                <img src="./images/sunset.png" alt="sun" class="property-icon">
+                <div class="property">
+                    <div class="key">Sunset</div>
+                    <div class="value" id="tm-set"></div>
+                </div>
+            </div>
+        </div>
+
+        <div style="display: flex;">
+            <div style="display: flex;">
+                <img src="./images/dawn.png" alt="sun" class="property-icon"">
+                    <div class=" property">
+                <div class="key">Dawn</div>
+                <div class="value" id="tm-dawn"></div>
+            </div>
+        </div>
+
+        <div style="display: flex;">
+            <img src="./images/dusk.png" alt="sun" class="property-icon"">
+                    <div class=" property">
+            <div class="key">Dusk</div>
+            <div class="value" id="tm-dusk"></div>
+        </div>
+    </div>
+    </div>
+
+    <div style="display: flex;">
+        <img src="./images/day-len.png" alt="sun" class="property-icon">
+        <div class="property">
+            <div class="key">Day Length</div>
+            <div class="value" id="tm-dl"></div>
+        </div>
+    </div>
+
+    <div style="display: flex;">
+        <img src="./images/noon.png" alt="sun" class="property-icon">
+        <div class="property">
+            <div class="key">Solar Noon</div>
+            <div class="value" id="tm-sn"></div>
+        </div>
+    </div>
+
+    <div style="display: flex;">
+        <img src="./images/time-zone.png" alt="sun" class="property-icon">
+        <div class="property">
+            <div class="key">Time Zone</div>
+            <div class="value" id="tm-tz"></div>
+        </div>
+    </div>
+    </div>
+    </div>
+
+    <div class="space"></div>
+
+    <footer style="display: flex;">
+        <div id="copyright">
+            <p>&copy; 2023 X-Weather. All rights reserved.</p>
+        </div>
+        <p id="credit">Powered by <a href="https://sunrisesunset.io/" target="_blank">Sunrise Sunset API</a></p>
+    </footer>
+
+
+
+    <script src="script.js"></script>
+</body>
+
+</html>
